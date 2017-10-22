@@ -14,7 +14,7 @@ class DriveSystem(object):
                                  (1, 0, 0),
                                  (1, 0, 0),
                                  (1, 0, 0)]
-        self.ser = serial.Serial('/dev/ttyACM0', 115200)
+        self.ser = serial.Serial('/dev/tty.usbmodem0E21FE51', 115200)
 
     def find_available_drive(self):
         for i in range(0, len(self.available_drives)):
