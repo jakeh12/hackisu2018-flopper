@@ -1,8 +1,18 @@
 from header_chunk import HeaderChunk
 from track_chunk import TrackChunk
-from helpers import HexArrayToDecimal, OctaveMatch
-from time import sleep
+from helpers import HexArrayToDecimal
+from drive_system import DriveSystem
+import time
 
+'''
+import serial
+
+ser = serial.Serial('/dev/ttyACM0', 115200)
+ser.write([35, 0x80])     # Note 40
+#ser.write([0x81])     # Floppy 0 -> On
+ser.close()
+
+'''
 #with open('/home/justin/Documents/pirates.mid', 'rb') as midiFile:
 with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
 #with open('/home/justin/Documents/happy_birthday.mid', 'rb') as midiFile:
@@ -68,57 +78,31 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
                 all_notes[x + 1] = temp
 
     print("All notes: " + str(all_notes))
-
-    # Information stored in tuple: (available, startTime, note)
-    available_drives = [(1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0),
-                        (1, 0, 0)]
     current_time = 0
+    drive_system = DriveSystem()
+    startTime = time.time()
 
     for note in all_notes:
         if note[1] <= current_time:
-            #print(note)
-
             if note[2] == 1:
-                # Need to find first available drive
-                for i in range(0, len(available_drives)):
-                    if available_drives[i][0] == 1:
-                        available_drives[i] = (0, note[1], note[0])
-                        print("SENDING: (note = " + str(OctaveMatch(note[0])) + ", drive = " + str(i) + ", on = 1")
-                        break
+                drive_num = drive_system.find_available_drive()
+                drive_system.lock_drive(drive_num, note)
             else:
-                for i in range(0, len(available_drives)):
-                    if available_drives[i][0] == 0 and available_drives[i][2] == note[0]:
-                        available_drives[i] = (1, 0, 0)     # Make drive available
-                        print("SENDING: (note = " + str(OctaveMatch(note[0])) + ", drive = " + str(i) + ", on = 0")
-                        break
+                drive_num = drive_system.find_playing_drive(note)
+                drive_system.unlock_drive(drive_num, note)
         else:
             delta_time = note[1] - current_time
             sleep_time = ((song_tempo / header_chunk.data.ticks_per_quarter_note) * delta_time) / float(1000000)
-            print("Sleeping: " + str(sleep_time))
-            sleep(sleep_time)
+            print("Sleeping: " + str(sleep_time) + " seconds")
+            time.sleep(sleep_time)
             current_time += delta_time
-            #print(note)
 
             if note[2] == 1:
-                # Need to find first available drive
-                for i in range(0, len(available_drives)):
-                    if available_drives[i][0] == 1:
-                        available_drives[i] = (0, note[1], note[0])
-                        print("SENDING: (note = " + str(OctaveMatch(note[0])) + ", drive = " + str(i) + ", on = 1")
-                        break
+                drive_num = drive_system.find_available_drive()
+                drive_system.lock_drive(drive_num, note)
             else:
-                for i in range(0, len(available_drives)):
-                    if available_drives[i][0] == 0 and available_drives[i][2] == note[0]:
-                        available_drives[i] = (1, 0, 0)     # Make drive available
-                        print("SENDING: (note = " + str(OctaveMatch(note[0])) + ", drive = " + str(i) + ", on = 0")
-                        break
+                drive_num = drive_system.find_playing_drive(note)
+                drive_system.unlock_drive(drive_num, note)
 
-        #print(available_drives)
+    endTime = time.time()
+    print("Total time: " + str(endTime - startTime))
