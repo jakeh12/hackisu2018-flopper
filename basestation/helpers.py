@@ -9,3 +9,12 @@ def HexArrayToDecimal(hex_list):
         shift_amount -= byte_size
 
     return dec_value
+
+def OctaveMatch(value):
+    while value > 48:
+        value -= 12
+
+    while value < 33:
+        value += 12
+
+    return value

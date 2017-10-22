@@ -3,7 +3,8 @@ from helpers import HexArrayToDecimal
 class TrackData(object):
     def __init__(self, raw_data):
         self.raw_data = raw_data
-        self.temp = list()
+        self.tempo = 0
+        self.notes = list()
         self.parse_events()
 
     def parse_events(self):
@@ -11,6 +12,7 @@ class TrackData(object):
         delta_time = 0
         time_parsing = True
         relative_time = 0
+        tempo_counter = 0
 
         while byte_pointer < len(self.raw_data):
             current_byte = HexArrayToDecimal(self.raw_data[byte_pointer])
@@ -29,14 +31,17 @@ class TrackData(object):
             else:
                 channel_mask = (current_byte & 0xF0)
                 sysex_mask = (current_byte & 0xFF)
+                meta_mask = (current_byte & 0xFF)
 
                 if channel_mask == 0x90:
                     note = HexArrayToDecimal(self.raw_data[byte_pointer + 1])
                     print("Note on: " + str(note) + " @ " + str(relative_time))
+                    self.notes.append((note, relative_time, 1))
                     byte_pointer += 2
                 elif channel_mask == 0x80:
                     note = HexArrayToDecimal(self.raw_data[byte_pointer + 1])
                     print("Note off: " + str(note) + " @ " + str(relative_time))
+                    self.notes.append((note, relative_time, 0))
                     byte_pointer += 2
                 elif channel_mask == 0xA0:
                     print("Polyphonic Key Pressure")
@@ -57,6 +62,19 @@ class TrackData(object):
                     print("F0 -- ???")
                 elif sysex_mask == 0xF7:
                     print("F7 -- ???")
+                elif meta_mask == 0xFF:
+                    meta_type = HexArrayToDecimal(self.raw_data[byte_pointer + 1])
+                    meta_length = HexArrayToDecimal(self.raw_data[byte_pointer + 2])
 
+                    if meta_type == 0x51 and meta_length == 0x03:
+                        # Found the tempo section
+                        self.tempo += HexArrayToDecimal(self.raw_data[byte_pointer + 3:byte_pointer + meta_length + 3])
+                        tempo_counter += 1
+                    byte_pointer += meta_length + 3
                 time_parsing = True
             byte_pointer += 1
+
+        if tempo_counter != 0:
+            self.tempo = self.tempo / tempo_counter
+        else:
+            self.tempo = 0
