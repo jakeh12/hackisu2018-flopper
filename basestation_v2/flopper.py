@@ -3,12 +3,12 @@ import serial
 import time
 
 conn = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
-midi_pattern = midi.read_midifile("mz_331_3.mid")
+midi_pattern = midi.read_midifile("carol_of_the_bells_nl.mid")
 ticks_per_qn = midi_pattern.resolution
 song_tempo = 500000
 all_events = list()
-octive_offset = 3
-slow_percent = 0.8
+octive_offset = 2
+slow_percent = 0.9
 
 for i, track in enumerate(midi_pattern):
     abs_tick = 0
@@ -44,11 +44,18 @@ for event in all_events:
 
 
         if event.track == 2:
-            for i in range(2, 10):
-                conn.write([altered_pitch, (1 << 7) | i])
+            for i in range(4, 10):
+                conn.write([altered_pitch - (i % 2 * 12), (1 << 7) | i])
         elif event.track == 3:
-            for i in range(0, 2):
+            for i in range(3, 4):
                 conn.write([altered_pitch, (1 << 7) | i])
+        elif event.track == 4:
+            for i in range(1, 3):
+                conn.write([altered_pitch, (1 << 7) | i])
+        elif event.track == 5:
+            for i in range(0, 1):
+                conn.write([altered_pitch, (1 << 7) | i])
+
 
         #conn.write([altered_pitch, (1 << 7) | event.track])
 
@@ -67,13 +74,19 @@ for event in all_events:
 
 
         if event.track == 2:
-            for i in range(2, 10):
-                conn.write([altered_pitch, (i & 0x7F)])
+            for i in range(4, 10):
+                conn.write([altered_pitch - (i % 2 * 12), (i & 0x7F)])
         elif event.track == 3:
-            for i in range(0, 2):
-                conn.write([altered_pitch + 12, (i & 0x7F)])
+            for i in range(3, 4):
+                conn.write([altered_pitch, (i & 0x7F)])
+        elif event.track == 4:
+            for i in range(1, 3):
+                conn.write([altered_pitch, (i & 0x7F)])
+        elif event.track == 5:
+            for i in range(0, 1):
+                conn.write([altered_pitch, (i & 0x7F)])
 
-        # conn.write([altered_pitch, (event.track & 0x7F)])
+        #conn.write([altered_pitch, (event.track & 0x7F)])
 
 endTime = time.time()
 print(endTime - startTime)

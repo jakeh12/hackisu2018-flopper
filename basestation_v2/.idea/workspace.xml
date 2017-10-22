@@ -17,8 +17,8 @@
       <file leaf-file-name="flopper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/flopper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="73" column="46" lean-forward="false" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
+            <state relative-caret-position="456">
+              <caret line="47" column="56" lean-forward="false" selection-start-line="47" selection-start-column="56" selection-end-line="47" selection-end-column="56" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -39,8 +39,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="852" />
-    <option name="y" value="-4" />
+    <option name="x" value="787" />
+    <option name="y" value="100" />
     <option name="width" value="960" />
     <option name="height" value="1003" />
   </component>
@@ -139,7 +139,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33654878" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24330118" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -197,26 +197,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/local/lib/python2.7/dist-packages/midi-0.2.3-py2.7.egg!/midi/fileio.py">
+    <entry file="file:///usr/lib/python2.7/dist-packages/serial/serialposix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="159" column="0" lean-forward="false" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        <state relative-caret-position="350">
+          <caret line="537" column="36" lean-forward="false" selection-start-line="537" selection-start-column="36" selection-end-line="537" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python2.7/dist-packages/serial/serialposix.py">
+    <entry file="jar:///usr/local/lib/python2.7/dist-packages/midi-0.2.3-py2.7.egg!/midi/fileio.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="537" column="0" lean-forward="false" selection-start-line="537" selection-start-column="0" selection-end-line="537" selection-end-column="0" />
+        <state relative-caret-position="363">
+          <caret line="159" column="0" lean-forward="false" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/flopper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="73" column="46" lean-forward="false" selection-start-line="73" selection-start-column="46" selection-end-line="73" selection-end-column="46" />
+        <state relative-caret-position="456">
+          <caret line="47" column="56" lean-forward="false" selection-start-line="47" selection-start-column="56" selection-end-line="47" selection-end-column="56" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
