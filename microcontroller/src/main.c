@@ -13,32 +13,32 @@
 // 80 MHz / 4 kHz = 20000 (-1)
 #define TIMER1A_PRESCALER 4000 // will fire every 0.1 ms
 #define NUM_OF_FLOPPYS 10
-#define MAX_NUM_OF_STEPS 140
+#define MAX_NUM_OF_STEPS 130
 
-const int freq_count_lookup[60] = {
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-182,
-172,
+const unsigned char freq_count_lookup[128] = {
+153,
+144,
+136,
+129,
+121,
+115,
+108,
+102,
+96,
+91,
+86,
+162,
+153,
+144,
+136,
+129,
+121,
+115,
+108,
+102,
+96,
+91,
+86,
 162,
 153,
 144,
@@ -74,8 +74,76 @@ const int freq_count_lookup[60] = {
 26,
 24,
 23,
-1,
-1
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26,
+24,
+23,
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26,
+24,
+23,
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26,
+24,
+23,
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26,
+24,
+23,
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26,
+24,
+23,
+43,
+40,
+38,
+36,
+34,
+32,
+30,
+29,
+27,
+26
 };
 
 volatile int counter = 0;
@@ -202,7 +270,7 @@ void Timer1AHandler(void) {
          for (i = 0; i < NUM_OF_FLOPPYS; i++) {
                  frequencyDividers[i] = 1;
                  frequencyOn[i] = 0;
-                 stepCounters[i] = 0;
+                 stepCounters[i] = -10;
                  toggleDir(i);
          }
   } 
@@ -222,9 +290,9 @@ void UART0Handler(void) {
       if (byte_counter == 2)
         break; 
     }
-      int note = (int)byte_array[0];
-      int turn_on = (int)((byte_array[1] >> 7) & 0x01);
-      int floppy = (int)(byte_array[1] & 0x7F);
+      unsigned char note = (unsigned char)byte_array[0];
+      unsigned char turn_on = (unsigned char)((byte_array[1] >> 7) & 0x01);
+      unsigned char floppy = (unsigned char)(byte_array[1] & 0x7F);
       
       frequencyDividers[floppy] = freq_count_lookup[note];
       frequencyOn[floppy] = turn_on;

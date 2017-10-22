@@ -11,10 +11,11 @@ def HexArrayToDecimal(hex_list):
     return dec_value
 
 def OctaveMatch(value):
+    '''
     while value > 48:
         value -= 12
 
     while value < 33:
         value += 12
-
+    '''
     return value

@@ -4,7 +4,7 @@ from helpers import HexArrayToDecimal
 from drive_system import DriveSystem
 import time
 
-with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
+with open('/Users/jhladik/Downloads/test.mid', 'rb') as midiFile:
     # Read entire file and save into a list of ascii/hex chars
     fileContent = list(midiFile.read())
 
@@ -44,9 +44,9 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
 
     for track_chunk in track_chunks:
         print("Track length: " + str(track_chunk.length))
-        print("Hex dump: " + str([hex(ord(x)) for x in track_chunk.data.raw_data]))
+        #print("Hex dump: " + str([hex(ord(x)) for x in track_chunk.data.raw_data]))
         track_notes = track_chunk.data.notes
-        print("Notes: " + str(track_notes))
+        #print("Notes: " + str(track_notes))
 
         if len(track_notes) >= 5:
             all_notes += track_notes
@@ -56,6 +56,7 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
         if temp_tempo != 0:
             song_tempo = temp_tempo
 
+    song_tempo = 200000
     print("Tempo (us/qn): " + str(song_tempo))
 
     # Order notes
@@ -66,7 +67,7 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
                 all_notes[x] = all_notes[x + 1]
                 all_notes[x + 1] = temp
 
-    print("All notes: " + str(all_notes))
+    #print("All notes: " + str(all_notes))
     current_time = 0
     drive_system = DriveSystem()
     startTime = time.time()
@@ -74,11 +75,11 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
     for note in all_notes:
         if note[1] <= current_time:
             if note[2] == 1:
-                for i in range(0, 2):
+                #for i in range(0, 2):
                     drive_num = drive_system.find_available_drive()
                     drive_system.lock_drive(drive_num, note)
             else:
-                for i in range(0, 2):
+                #for i in range(0, 2):
                     drive_num = drive_system.find_playing_drive(note)
                     drive_system.unlock_drive(drive_num, note)
         else:
@@ -89,11 +90,11 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
             current_time += delta_time
 
             if note[2] == 1:
-                for i in range(0, 2):
+                #for i in range(0, 2):
                     drive_num = drive_system.find_available_drive()
                     drive_system.lock_drive(drive_num, note)
             else:
-                for i in range(0, 2):
+                #for i in range(0, 2):
                     drive_num = drive_system.find_playing_drive(note)
                     drive_system.unlock_drive(drive_num, note)
 
