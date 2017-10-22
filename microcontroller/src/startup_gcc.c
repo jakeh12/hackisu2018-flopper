@@ -38,6 +38,7 @@ static void FaultISR(void);
 static void IntDefaultHandler(void);
 
 __attribute__((weak)) void Timer1AHandler(void) {}
+__attribute__((weak)) void UART0Handler(void) {}
 //*****************************************************************************
 //
 // The entry point for the application.
@@ -83,7 +84,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    IntDefaultHandler,                      // UART0 Rx and Tx
+    UART0Handler,                           // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave
