@@ -74,11 +74,13 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
     for note in all_notes:
         if note[1] <= current_time:
             if note[2] == 1:
-                drive_num = drive_system.find_available_drive()
-                drive_system.lock_drive(drive_num, note)
+                for i in range(0, 2):
+                    drive_num = drive_system.find_available_drive()
+                    drive_system.lock_drive(drive_num, note)
             else:
-                drive_num = drive_system.find_playing_drive(note)
-                drive_system.unlock_drive(drive_num, note)
+                for i in range(0, 2):
+                    drive_num = drive_system.find_playing_drive(note)
+                    drive_system.unlock_drive(drive_num, note)
         else:
             delta_time = note[1] - current_time
             sleep_time = ((song_tempo / header_chunk.data.ticks_per_quarter_note) * delta_time) / float(100000)
@@ -87,11 +89,13 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
             current_time += delta_time
 
             if note[2] == 1:
-                drive_num = drive_system.find_available_drive()
-                drive_system.lock_drive(drive_num, note)
+                for i in range(0, 2):
+                    drive_num = drive_system.find_available_drive()
+                    drive_system.lock_drive(drive_num, note)
             else:
-                drive_num = drive_system.find_playing_drive(note)
-                drive_system.unlock_drive(drive_num, note)
+                for i in range(0, 2):
+                    drive_num = drive_system.find_playing_drive(note)
+                    drive_system.unlock_drive(drive_num, note)
 
     endTime = time.time()
     print("Total time: " + str(endTime - startTime))
