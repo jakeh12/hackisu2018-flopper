@@ -4,18 +4,7 @@ from helpers import HexArrayToDecimal
 from drive_system import DriveSystem
 import time
 
-'''
-import serial
-
-ser = serial.Serial('/dev/ttyACM0', 115200)
-ser.write([35, 0x80])     # Note 40
-#ser.write([0x81])     # Floppy 0 -> On
-ser.close()
-
-'''
-#with open('/home/justin/Documents/pirates.mid', 'rb') as midiFile:
 with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
-#with open('/home/justin/Documents/happy_birthday.mid', 'rb') as midiFile:
     # Read entire file and save into a list of ascii/hex chars
     fileContent = list(midiFile.read())
 
@@ -92,7 +81,7 @@ with open('/home/justin/Documents/mario.mid', 'rb') as midiFile:
                 drive_system.unlock_drive(drive_num, note)
         else:
             delta_time = note[1] - current_time
-            sleep_time = ((song_tempo / header_chunk.data.ticks_per_quarter_note) * delta_time) / float(1000000)
+            sleep_time = ((song_tempo / header_chunk.data.ticks_per_quarter_note) * delta_time) / float(100000)
             print("Sleeping: " + str(sleep_time) + " seconds")
             time.sleep(sleep_time)
             current_time += delta_time
