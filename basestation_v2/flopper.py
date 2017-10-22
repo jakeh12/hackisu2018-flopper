@@ -3,7 +3,7 @@ import serial
 import time
 
 conn = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
-midi_pattern = midi.read_midifile("mario.mid")
+midi_pattern = midi.read_midifile("pirates.mid")
 ticks_per_qn = midi_pattern.resolution
 song_tempo = 500000
 all_events = list()
@@ -69,30 +69,40 @@ for event in all_events:
 
         print("Note On: " + str(altered_pitch) + " @ Channel " + str(event.channel) + ", Track " + str(event.track) + " -> " + str(event.abs_tick))
 
-        if event.track == 3:
-            for i in range(2, 10):
+        if event.track == 4:
+            for i in range(4, 10):
+                conn.write([altered_pitch - ((i % 2) * 12), (1 << 7) | i])
+        elif event.track == 3:
+            for i in range(2, 4):
                 conn.write([altered_pitch, (1 << 7) | i])
-        elif event.track == 4:
+        elif event.track == 2:
             for i in range(0, 2):
-                conn.write([altered_pitch, (1 << 7) | i])
+                conn.write([altered_pitch - ((i % 2) * 12), (1 << 7) | i])
+
         #conn.write([altered_pitch, (1 << 7) | event.track])
+
     elif event.name == 'Note Off':
         altered_pitch = event.pitch - 24
         delta_time = event.abs_tick - curr_tick
 
         if delta_time > 0:
             sleep_time = ((float(delta_time) / ticks_per_qn) * song_tempo) / float(1000000)
+
             print("Sleeping: " + str(sleep_time))
             time.sleep(sleep_time)
             curr_tick += delta_time
 
         print("Note Off: " + str(altered_pitch) + " @ Channel " + str(event.channel) + ", Track " + str(event.track) + " -> " + str(event.abs_tick))
-        if event.track == 3:
-            for i in range(2, 10):
+
+        if event.track == 4:
+            for i in range(4, 10):
+                conn.write([altered_pitch - ((i % 2) * 12), (i & 0x7F)])
+        elif event.track == 3:
+            for i in range(2, 4):
                 conn.write([altered_pitch, (i & 0x7F)])
-        elif event.track == 4:
+        elif event.track == 2:
             for i in range(0, 2):
-                conn.write([altered_pitch, (i & 0x7F)])
+                conn.write([altered_pitch - ((i % 2) * 12), (i & 0x7F)])
 
         #conn.write([altered_pitch, (event.track & 0x7F)])
 
