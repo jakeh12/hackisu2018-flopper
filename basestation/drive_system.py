@@ -54,5 +54,5 @@ class DriveSystem(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.ser.close()
-        temp = 1
+
 
