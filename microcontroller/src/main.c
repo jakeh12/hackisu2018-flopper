@@ -114,7 +114,7 @@ void toggleDir(int outputNumber) {
       pinToggle(GPIO_PORTB_BASE, GPIO_PIN_2);
       break;
     case 7:
-      pinToggle(GPIO_PORTD_BASE, GPIO_PIN_7);
+      pinToggle(GPIO_PORTA_BASE, GPIO_PIN_7);
       break;
     case 8:
       pinToggle(GPIO_PORTD_BASE, GPIO_PIN_6);
@@ -203,6 +203,7 @@ void Timer1AHandler(void) {
                  frequencyDividers[i] = 1;
                  frequencyOn[i] = 0;
                  stepCounters[i] = 0;
+                 toggleDir(i);
          }
   } 
 }
@@ -244,7 +245,7 @@ int main() {
     ROM_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL| SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
     
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4);
+    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 |  GPIO_PIN_7);
     
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_6 | GPIO_PIN_7);
@@ -253,10 +254,10 @@ int main() {
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
     
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_6);
     
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
     
     ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     ROM_GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
